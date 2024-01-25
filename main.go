@@ -24,7 +24,6 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Access post data
 	title := postData["title"]
 	content := postData["content"]
 
@@ -35,13 +34,11 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	// Insert post into the database
 	_, err = db.Exec("INSERT INTO posts (title, content) VALUES (?, ?)", title, content)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	// Respond with a message
 	w.Write([]byte("Post created successfully!"))
 }
