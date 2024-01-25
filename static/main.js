@@ -53,8 +53,6 @@ function loadCreatePostPage() {
         handleCreatePost();
     });
     
-    console.log("Loading Create Post Page");
-
 }
 
 // function loadNotFoundPage() {

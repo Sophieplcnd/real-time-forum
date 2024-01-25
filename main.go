@@ -1,4 +1,3 @@
-// main.go
 package main
 
 import (
@@ -29,7 +28,6 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 	title := postData["title"]
 	content := postData["content"]
 
-	// Open a connection to the SQLite database
 	db, err := sql.Open("sqlite3", ".data/database.db")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
