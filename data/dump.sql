@@ -1,0 +1,58 @@
+-- Dump file for the forum project
+PRAGMA foreign_keys=OFF;
+
+BEGIN TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS Users (
+    UserID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nickname TEXT UNIQUE NOT NULL,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Email TEXT UNIQUE NOT NULL,
+    PasswordHash TEXT NOT NULL,
+    Age INTEGER,
+    Gender TEXT,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS Posts (
+    PostID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserID INTEGER,
+    Title TEXT NOT NULL,
+    Content TEXT NOT NULL,
+    Category TEXT,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS Comments (
+    CommentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    PostID INTEGER,
+    UserID INTEGER,
+    Content TEXT NOT NULL,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (PostID) REFERENCES Posts(PostID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE IF NOT EXISTS PrivateMessages (
+    MessageID INTEGER PRIMARY KEY AUTOINCREMENT,
+    SenderID INTEGER,
+    ReceiverID INTEGER,
+    Content TEXT NOT NULL,
+    SentAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ReadAt DATETIME,
+    FOREIGN KEY (SenderID) REFERENCES Users(UserID),
+    FOREIGN KEY (ReceiverID) REFERENCES Users(UserID)
+);
+
+
+COMMIT;
+
+-- enable foreign key 
+PRAGMA foreign_keys=ON;
+
+-- sqlite3 database.db < dump.sql   --use this to run the dump file
