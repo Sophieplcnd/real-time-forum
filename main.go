@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"net/http"
 )
 
@@ -15,16 +14,14 @@ func main() {
 }
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	var postData map[string]string
-	err := decoder.Decode(&postData)
+	err := r.ParseForm()
 	if err != nil {
-		http.Error(w, "Error decoding JSON", http.StatusBadRequest)
+		http.Error(w, "Error parsing form data", http.StatusBadRequest)
 		return
 	}
 
-	title := postData["title"]
-	content := postData["content"]
+	title := r.FormValue("post-title")
+	content := r.FormValue("post-content")
 
 	db, err := sql.Open("sqlite3", ".data/database.db")
 	if err != nil {
