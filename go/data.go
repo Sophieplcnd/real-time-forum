@@ -1,3 +1,4 @@
+// handle database insertions
 package forum
 
 import (

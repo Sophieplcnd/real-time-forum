@@ -25,21 +25,27 @@ export async function loginHandler() {
   const emailUsername = document.getElementById("email-username").value;
   const password = document.getElementById("password").value;
 
-  try {
-    const response = await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: emailUsername,
-        password: password,
-      }),
-    });
-    // handle login, set cookies
-    const data = await response.json();
-  } catch (error) {
-    console.error(err);
+  // testing functionality with pageLoader on main.js
+  if (emailUsername === "username" && password === "password") {
+    alert("login successful");
+  } else {
+    alert("login unsuccessful");
   }
-}
 
+  // try {
+  //   const response = await fetch("/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: emailUsername,
+  //       password: password,
+  //     }),
+  //   });
+  //   // handle login, set cookies
+  //   const data = await response.json();
+  // } catch (error) {
+  //   console.error(err);
+  // }
+}

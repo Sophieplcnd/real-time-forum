@@ -1,11 +1,10 @@
 package main
 
 import (
-  "fmt"
-	"database/sql"
+	"fmt"
 	"net/http"
-	forum "rt-forum/go"
 
+	forum "github.com/Sophieplcnd/real-time-forum/go"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -16,6 +15,7 @@ func main() {
 	http.Handle("/", fs)
 
 	port := ":8080"
+	fmt.Println("Fetching server...")
 	http.ListenAndServe(port, nil)
 }
 
@@ -26,8 +26,8 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	title := r.FormValue("post-title")
-	content := r.FormValue("post-content")
+	// title := r.FormValue("post-title")
+	// content := r.FormValue("post-content")
 }
 
 

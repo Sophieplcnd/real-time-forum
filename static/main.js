@@ -16,7 +16,8 @@ const pageLoader = async () => {
     { path: "/", view: HomePage },
     { path: "/login", view: LoginPage },
     { path: "/register", view: RegisterPage },
-    { path: "/posts", view: PostPage},
+    { path: "/posts", view: PostPage },
+  ];
 
   // goes through pages array, returns true if current URL matches page in array
   let page = pages.find((page) => location.pathname === page.path);
