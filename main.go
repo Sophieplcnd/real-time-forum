@@ -1,44 +1,35 @@
 package main
 
 import (
-	"database/sql"
-	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("static")))
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
 
-	http.HandleFunc("/api/create-post", createPostHandler)
+	fmt.Println("Server listening on :3000...")
+	err := http.ListenAndServe(":3000", nil)
+	if err != nil {
+		panic(err)
+	}
 
-	port := ":8080"
-	http.ListenAndServe(port, nil)
+	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    //     http.ServeFile(w, r, "index.html")
+    // })
+
+	// fmt.Println("Server listening on :8080...")
+	// http.ListenAndServe(":8080", nil)
 }
 
-func createPostHandler(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	var postData map[string]string
-	err := decoder.Decode(&postData)
-	if err != nil {
-		http.Error(w, "Error decoding JSON", http.StatusBadRequest)
-		return
-	}
+// func serveHTML(w http.ResponseWriter, r *http.Request) {
+// 	content, err := os.ReadFile("index.html")
+// 	if err != nil {
+// 		http.Error(w, "Error reading HTML file", http.StatusInternalServerError)
+// 		return
+// 	}
 
-	title := postData["title"]
-	content := postData["content"]
-
-	db, err := sql.Open("sqlite3", ".data/database.db")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer db.Close()
-
-	_, err = db.Exec("INSERT INTO posts (title, content) VALUES (?, ?)", title, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Write([]byte("Post created successfully!"))
-}
+// 	w.Header().Set("Content-Type", "text/html")
+// 	w.Write(content)
+// }
