@@ -1,8 +1,19 @@
-// package forum
+package forum
 
-// import (
-// 	"net/http"
-// )
+import (
+	"database/sql"
+	"log"
+)
+
+var DB *sql.DB
+
+func Init() {
+	var err error
+	DB, err = sql.Open("sqlite3", "./datagit sw/database.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 
 // func ServeLogin(w http.ResponseWriter, r *http.Request) {
 // 	// Simulate content retrieval from a database or other source

@@ -30,7 +30,7 @@ const pageLoader = async () => {
   // find and replace div container element with html of chosen page
   document.querySelector("#container").innerHTML = html;
 
-  // find current page, load relevant  event listeners for that page
+  // find current page, load relevant event listeners for that page
   switch (page.view) {
     case LoginPage:
       console.log("login page loaded");
