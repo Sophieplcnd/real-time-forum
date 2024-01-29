@@ -1,11 +1,17 @@
 package main
 
 import (
+  "fmt"
 	"database/sql"
 	"net/http"
+	forum "rt-forum/go"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+   forum.Init()
+  
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 
@@ -22,19 +28,6 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	title := r.FormValue("post-title")
 	content := r.FormValue("post-content")
-
-	db, err := sql.Open("sqlite3", ".data/database.db")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer db.Close()
-
-	_, err = db.Exec("INSERT INTO posts (title, content) VALUES (?, ?)", title, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Write([]byte("Post created successfully!"))
 }
+
+

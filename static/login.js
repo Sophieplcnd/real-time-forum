@@ -8,30 +8,38 @@ export default class LoginPage {
     return `
         <h2>Login</h2>
         <form id="login-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
-
+            <label for="email-username">Email or Username:</label>
+            <input type="text" id="email-username" name="email-username" required><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
-
             <button type="button" id="login-button">Login</button>
         </form>
     `;
   }
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   const loginContainer = document.getElementById("content");
-//   loginContainer.innerHTML = `
-//         <h2>Login</h2>
-//         <form id="login-form">
-//             <label for="username">Username:</label>
-//             <input type="text" id="username" name="username" required><br>
+export async function loginHandler() {
+  console.log("Button working");
 
-//             <label for="password">Password:</label>
-//             <input type="password" id="password" name="password" required><br>
+  // get user login details
+  const emailUsername = document.getElementById("email-username").value;
+  const password = document.getElementById("password").value;
 
-//             <button type="button" id="login-button">Login</button>
-//         </form>
-//     `;
-// });
+  try {
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: emailUsername,
+        password: password,
+      }),
+    });
+    // handle login, set cookies
+    const data = await response.json();
+  } catch (error) {
+    console.error(err);
+  }
+}
+

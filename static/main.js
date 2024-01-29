@@ -2,6 +2,7 @@ import LoginPage from "./login.js";
 import HomePage from "./home.js";
 import RegisterPage from "./registration.js";
 import PostPage from "./post.js";
+import { loginHandler } from "./login.js";
 
 // function to update and redirect browser url
 const navigateTo = (page) => {
@@ -15,10 +16,7 @@ const pageLoader = async () => {
     { path: "/", view: HomePage },
     { path: "/login", view: LoginPage },
     { path: "/register", view: RegisterPage },
-    { path: "/posts", view:  PostPage},
-
-
-  ];
+    { path: "/posts", view: PostPage},
 
   // goes through pages array, returns true if current URL matches page in array
   let page = pages.find((page) => location.pathname === page.path);
@@ -32,6 +30,26 @@ const pageLoader = async () => {
 
   // find and replace div container element with html of chosen page
   document.querySelector("#container").innerHTML = html;
+
+  switch (page.view) {
+    case LoginPage:
+      console.log("login page loaded");
+      document
+        .getElementById("login-button")
+        .addEventListener("click", loginHandler);
+      break;
+    case RegisterPage:
+      console.log("registration page loaded");
+      break;
+    case HomePage:
+      console.log("home page loaded");
+      break;
+    case PostPage:
+      console.log("create post page loaded");
+      break;
+    default:
+      console.log("default page loaded");
+  }
 };
 
 // replacing default forwards and backwards in browser with our pageLoader function
@@ -45,11 +63,5 @@ document.addEventListener("DOMContentLoaded", () => {
       navigateTo(e.target.href);
     });
   });
-
-  // document.body.addEventListener("click", (event) => {
-  //   if (event.target.matches("[data-link]")) {
-  //     event.preventDefault();
-  //   }
-  // });
   pageLoader();
 });
