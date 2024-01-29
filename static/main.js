@@ -1,69 +1,55 @@
-document.addEventListener("DOMContentLoaded", function () {
-    navigateTo(getCurrentRoute());
+import LoginPage from "./login.js";
+import HomePage from "./home.js";
+import RegisterPage from "./registration.js";
+import PostPage from "./post.js";
 
-    window.addEventListener("hashchange", function () {
-        navigateTo(getCurrentRoute());
+// function to update and redirect browser url
+const navigateTo = (page) => {
+  history.pushState(null, null, page);
+  pageLoader();
+};
+
+const pageLoader = async () => {
+  // paths and imported JS pages
+  const pages = [
+    { path: "/", view: HomePage },
+    { path: "/login", view: LoginPage },
+    { path: "/register", view: RegisterPage },
+    { path: "/posts", view:  PostPage},
+
+
+  ];
+
+  // goes through pages array, returns true if current URL matches page in array
+  let page = pages.find((page) => location.pathname === page.path);
+  // if page cannot be found, redirect to homepage
+  if (page === undefined) page = pages[0];
+
+  // reassigning view depending on desired page
+  const view = new page.view();
+  // declaring html variable using renderHTML function in JS pages
+  const html = view.renderHTML();
+
+  // find and replace div container element with html of chosen page
+  document.querySelector("#container").innerHTML = html;
+};
+
+// replacing default forwards and backwards in browser with our pageLoader function
+window.addEventListener("popstate", pageLoader);
+
+// add event listener so that all links will have the same behaviour as our pageLoader function
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("a").forEach(function (element) {
+    element.addEventListener("click", function (e) {
+      e.preventDefault();
+      navigateTo(e.target.href);
     });
+  });
+
+  // document.body.addEventListener("click", (event) => {
+  //   if (event.target.matches("[data-link]")) {
+  //     event.preventDefault();
+  //   }
+  // });
+  pageLoader();
 });
-
-function getCurrentRoute() {
-    return window.location.hash.substring(2);
-}
-
-function navigateTo(route) {
-    const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = "";  // Clear previous content
-
-    switch (route) {
-        case "":
-        case "/":
-            loadHomePage();
-            break;
-        case "/create-post":
-            loadCreatePostPage();
-            break;
-        // default:
-        //     loadNotFoundPage();
-        //     break;
-    }
-}
-
-function loadHomePage() {
-    const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = "<h2>Welcome to the Forum!</h2>";
-}
-
-function loadCreatePostPage() {
-    const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = `
-        <h2>Create a New Post</h2>
-        <form id="create-post-form">
-            <label for="post-title">Title:</label>
-            <input type="text" id="post-title" name="post-title" required>
-
-            <label for="post-content">Content:</label>
-            <textarea id="post-content" name="post-content" required></textarea>
-
-            <button type="submit">Create Post</button>
-        </form>
-    `;
-    document.getElementById("create-post-form").addEventListener("submit", function (event) {
-        event.preventDefault();
-        handleCreatePost();
-    });
-    
-}
-
-// function loadNotFoundPage() {
-//     const contentDiv = document.getElementById("content");
-//     contentDiv.innerHTML = "<h2>404 - Not Found</h2>";
-// }
-
-function handleCreatePost() {
-    // Handle post creation logic here
-    // ...
-
-    // Display a success message for now
-    const contentDiv = document.getElementById("content");
-    contentDiv.innerHTML = "<h2>Post created successfully!</h2>";
-}

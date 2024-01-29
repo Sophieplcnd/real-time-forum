@@ -7,9 +7,8 @@ import (
 )
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("static")))
-
-	http.HandleFunc("/api/create-post", createPostHandler)
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
 
 	port := ":8080"
 	http.ListenAndServe(port, nil)
