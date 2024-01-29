@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+  "fmt"
+	"database/sql"
 	"net/http"
 	forum "rt-forum/go"
 
@@ -9,15 +10,24 @@ import (
 )
 
 func main() {
-	forum.Init()
-
+   forum.Init()
+  
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 
-	fmt.Println("Server listening on :3000...")
-	err := http.ListenAndServe(":3000", nil)
-	if err != nil {
-		panic(err)
-	}
+	port := ":8080"
+	http.ListenAndServe(port, nil)
 }
+
+func createPostHandler(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Error parsing form data", http.StatusBadRequest)
+		return
+	}
+
+	title := r.FormValue("post-title")
+	content := r.FormValue("post-content")
+}
+
 

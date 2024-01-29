@@ -10,7 +10,7 @@ export default class RegisterPage {
         <form id="register-form">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
-
+            
             <label for="age">Age:</label>
             <input type="text" id="age" name="age" required><br>
 

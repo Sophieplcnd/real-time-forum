@@ -10,10 +10,8 @@ export default class LoginPage {
         <form id="login-form">
             <label for="email-username">Email or Username:</label>
             <input type="text" id="email-username" name="email-username" required><br>
-
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
-
             <button type="button" id="login-button">Login</button>
         </form>
     `;
@@ -45,18 +43,3 @@ export async function loginHandler() {
   }
 }
 
-// if (emailUsername === "email" && password === "password") {
-//   alert("You have successfully logged in.");
-// } else {
-//   alert("Incorrect Email/Username and/or Password");
-// }
-
-// document.addEventListener("DOMContentLoaded", function () {
-//   const loginButton = document.getElementById("login-button");
-//   if (loginButton) {
-//     console.log("Button found!");
-//     loginButton.addEventListener("click", loginHandler);
-//   } else {
-//     console.error("Button not found!");
-//   }
-// });
