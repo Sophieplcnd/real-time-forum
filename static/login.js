@@ -14,9 +14,8 @@ export default class LoginPage {
             <input type="password" id="password" name="password" required><br>
             <button type="button" id="login-button">Login</button>
         </form>
-        // link not working
         <div id="register-link">
-          <p>Don't have an account? <a id=link>Register here!</a></p>
+          <p>Don't have an account? <a href="/register" id=link>Register here!</a></p>
         </div>
     `;
   }

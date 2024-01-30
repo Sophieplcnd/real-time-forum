@@ -28,9 +28,8 @@ export default class RegisterPage {
 
             <button type="button" id="register-button">Register</button>
         </form>
-        // link not working
         <div id="login-link">
-          <p>Already have an account? <a href="/login">Login here!</a></p>
+          <p>Already have an account? <a href="/login" id="link">Login here!</a></p>
         </div>
     `;
   }

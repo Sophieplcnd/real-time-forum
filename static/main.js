@@ -39,9 +39,6 @@ const pageLoader = async () => {
       document
         .getElementById("login-button")
         .addEventListener("click", loginHandler);
-      // document
-      //   .getElementById("link")
-      //   .addEventListener("click", navigateTo("/register"));
       break;
     case RegisterPage:
       console.log("registration page loaded");
@@ -63,14 +60,20 @@ const pageLoader = async () => {
 // replacing default forwards and backwards in browser with our pageLoader function
 window.addEventListener("popstate", pageLoader);
 
-
 // add event listener so that all links will have the same behaviour as our pageLoader function
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("a").forEach(function (element) {
-        element.addEventListener("click", function (e) {
-          e.preventDefault();
-          navigateTo(e.target.href);
-        });
-      });
-      pageLoader();
-    });
+document.addEventListener("click", (e) => {
+  if (e.target.tagName === "A") {
+    e.preventDefault();
+    navigateTo(e.target.href);
+  }
+});
+
+// document.addEventListener("DOMContentLoaded", () => {
+//     document.querySelectorAll("a").forEach(function (element) {
+//         element.addEventListener("click", function (e) {
+//           e.preventDefault();
+//           navigateTo(e.target.href);
+//         });
+//       });
+//       pageLoader();
+//     });
