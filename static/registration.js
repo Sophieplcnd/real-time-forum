@@ -28,6 +28,27 @@ export default class RegisterPage {
 
             <button type="button" id="register-button">Register</button>
         </form>
+        <div id="login-link">
+          <p>Already have an account? <a href="/login" id="link">Login here!</a></p>
+        </div>
     `;
   }
+}
+
+export async function registerHandler() {
+  console.log("Button working");
+
+  // get user registration details
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const firstname = document.getElementById("firstname").value;
+
+  // testing functionality with pageLoader on main.js
+  if (email === "email" && password === "password") {
+    alert("registration successful");
+  } else {
+    alert("registration unsuccessful");
+  }
+
 }
