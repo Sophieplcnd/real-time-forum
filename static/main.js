@@ -1,14 +1,14 @@
-import LoginPage from "./login.js";
+import LoginPage, { loginHandler } from "./login.js";
 import HomePage from "./home.js";
-import RegisterPage from "./registration.js";
+import RegisterPage, { registerHandler } from "./registration.js";
 import PostPage from "./post.js";
-import { loginHandler } from "./login.js";
 
 // function to update and redirect browser url
 const navigateTo = (page) => {
   history.pushState(null, null, page);
   pageLoader();
 };
+
 
 const pageLoader = async () => {
   // paths and imported JS pages
@@ -32,15 +32,22 @@ const pageLoader = async () => {
   // find and replace div container element with html of chosen page
   document.querySelector("#container").innerHTML = html;
 
+  // find current page, get elements needed for that page
   switch (page.view) {
     case LoginPage:
       console.log("login page loaded");
       document
         .getElementById("login-button")
         .addEventListener("click", loginHandler);
+      // document
+      //   .getElementById("link")
+      //   .addEventListener("click", navigateTo("/register"));
       break;
     case RegisterPage:
       console.log("registration page loaded");
+      document
+      .getElementById("register-button")
+      .addEventListener("click", registerHandler);
       break;
     case HomePage:
       console.log("home page loaded");
@@ -56,13 +63,14 @@ const pageLoader = async () => {
 // replacing default forwards and backwards in browser with our pageLoader function
 window.addEventListener("popstate", pageLoader);
 
+
 // add event listener so that all links will have the same behaviour as our pageLoader function
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("a").forEach(function (element) {
-    element.addEventListener("click", function (e) {
-      e.preventDefault();
-      navigateTo(e.target.href);
+    document.querySelectorAll("a").forEach(function (element) {
+        element.addEventListener("click", function (e) {
+          e.preventDefault();
+          navigateTo(e.target.href);
+        });
+      });
+      pageLoader();
     });
-  });
-  pageLoader();
-});
