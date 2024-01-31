@@ -36,7 +36,7 @@ export default class RegisterPage {
 }
 
 export async function registerHandler() {
-  console.log("Button working");
+  console.log("JS registerHandler triggered");
 
   // get user registration details
   const username = document.getElementById("username").value;
@@ -44,11 +44,35 @@ export async function registerHandler() {
   const email = document.getElementById("email").value;
   const firstname = document.getElementById("firstname").value;
 
-  // testing functionality with pageLoader on main.js
-  if (email === "email" && password === "password") {
-    alert("registration successful");
-  } else {
-    alert("registration unsuccessful");
+  const userData = {
+    username: username,
+    password: password,
+    email: email,
+    firstname: firstname,
   }
 
+  // // testing functionality with pageLoader on main.js
+  // if (email === "email" && password === "password") {
+  //   alert("registration successful");
+  // } else {
+  //   alert("registration unsuccessful");
+  // }
+
+  // attempt registration
+  try {
+    const response = await fetch("/register", {
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(userData),
+					// include cookies
+				})
+        if (response.ok) {
+          console.log("registration successful")
+				}
+			} catch (error) {
+				console.error(error)
+			}
 }

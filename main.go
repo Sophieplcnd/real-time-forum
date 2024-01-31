@@ -9,10 +9,11 @@ import (
 )
 
 func main() {
-   forum.Init()
-  
+	forum.Init()
+
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
+	http.HandleFunc("/register", forum.RegisterHandler)
 
 	port := ":8080"
 	fmt.Println("Fetching server...")
@@ -29,5 +30,3 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 	// title := r.FormValue("post-title")
 	// content := r.FormValue("post-content")
 }
-
-
