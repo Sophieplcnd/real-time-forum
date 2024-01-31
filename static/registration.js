@@ -51,16 +51,9 @@ export async function registerHandler() {
     firstname: firstname,
   }
 
-  // // testing functionality with pageLoader on main.js
-  // if (email === "email" && password === "password") {
-  //   alert("registration successful");
-  // } else {
-  //   alert("registration unsuccessful");
-  // }
-
   // attempt registration
   try {
-    const response = await fetch("/register", {
+    const response = await fetch("http://localhost:8080/register", {
 					method: "POST",
 					headers: {
 						Accept: "application/json",
@@ -70,9 +63,9 @@ export async function registerHandler() {
 					// include cookies
 				})
         if (response.ok) {
-          console.log("registration successful")
+          console.log("JS registration handler: response ok")
 				}
 			} catch (error) {
-				console.error(error)
+				console.log("JS registerHandler error")
 			}
 }
