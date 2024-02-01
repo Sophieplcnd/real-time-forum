@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserData struct {
@@ -13,12 +15,23 @@ type UserData struct {
 	FirstName string `json:"firstname"`
 	LastName  string `json:"lastname"`
 	Age       string `json:"age"`
+	Gender    string `json:"gender"`
+}
+
+func hashPassword(password string) []byte {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Println("error encrypting password", err)
+	}
+	return hashedPassword
 }
 
 func insertUser(user UserData) error {
+	hashedPassword := hashPassword(user.Password)
+
 	fmt.Println("inserUser function called")
-	_, err := DB.Exec("INSERT INTO Users (Username, Email, PasswordHash, FirstName, LastName, Age) VALUES (?, ?, ?, ?, ?, ?)",
-		user.Username, user.Email, user.Password, user.FirstName, user.LastName, user.Age)
+	_, err := DB.Exec("INSERT INTO Users (Username, Email, PasswordHash, FirstName, LastName, Age, Gender) VALUES (?, ?, ?, ?, ?, ?, ?)",
+		user.Username, user.Email, hashedPassword, user.FirstName, user.LastName, user.Age, user.Gender)
 	if err != nil {
 		fmt.Println("error inserting user into database:", err)
 		return err
