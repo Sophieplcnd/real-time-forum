@@ -11,6 +11,8 @@ type UserData struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	FirstName string `json:"firstname"`
+	// LastName  string `json:"lastname"`
+	// Age       int    `json:"age"`
 }
 
 func insertUser(user UserData) error {

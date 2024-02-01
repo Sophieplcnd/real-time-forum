@@ -12,7 +12,7 @@ export default class RegisterPage {
             <input type="text" id="username" name="username" required><br>
             
             <label for="age">Age:</label>
-            <input type="text" id="age" name="age"><br>
+            <input type="number" id="age" name="age"><br>
 
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" required><br>
@@ -35,7 +35,7 @@ export default class RegisterPage {
   }
 }
 
-// gender dropdown below until i debug registration handler:
+// gender dropdown below until i debug the registration handler:
 {/* <label for="gender">Gender:</label>
 <select id="gender">
   <option value="female">Female</option>
@@ -51,6 +51,8 @@ export async function registerHandler() {
     password: document.getElementById("password").value,
     email: document.getElementById("email").value,
     firstname: document.getElementById("firstname").value,
+    // lastname: document.getElementById("lastname").value,
+    // age: document.getElementById("age").value
   }
 
   // attempt registration
