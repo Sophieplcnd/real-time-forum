@@ -14,6 +14,7 @@ func main() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 	http.HandleFunc("/register", forum.RegisterHandler)
+	http.HandleFunc("/login", forum.LoginHandler)
 
 	port := ":8080"
 	fmt.Println("Fetching server...")

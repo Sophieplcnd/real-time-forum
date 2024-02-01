@@ -25,7 +25,7 @@ export default class RegisterPage {
               <option value="female">Female</option>
               <option value="male">Male</option>
               <option value="other">Other</option>
-              <option value="prefer-not">Prefer Not to Say</option>
+              <option value="N/A">Prefer Not to Say</option>
             </select><br> 
 
             <label for="email">Email:</label>

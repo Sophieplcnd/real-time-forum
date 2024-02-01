@@ -22,33 +22,28 @@ export default class LoginPage {
 }
 
 export async function loginHandler() {
-  console.log("Button working");
+  console.log("JS loginhandler called");
 
   // get user login details
-  const emailUsername = document.getElementById("email-username").value;
-  const password = document.getElementById("password").value;
-
-  // testing functionality with pageLoader on main.js
-  if (emailUsername === "username" && password === "password") {
-    alert("login successful");
-  } else {
-    alert("login unsuccessful");
+  const loginDetails = {
+    emailUsername: document.getElementById("email-username").value,
+    password: document.getElementById("password").value,
   }
 
-  // try {
-  //   const response = await fetch("/login", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username: emailUsername,
-  //       password: password,
-  //     }),
-  //   });
-  //   // handle login, set cookies
-  //   const data = await response.json();
-  // } catch (error) {
-  //   console.error(err);
-  // }
+  try {
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginDetails),
+    });
+    if (response.ok) {
+      alert("login successful")
+    } else {
+      alert("login unsuccessful, please check your username/email and/or password")        
+    }
+  } catch (error) {
+    console.error(err);
+  }
 }

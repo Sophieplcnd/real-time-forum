@@ -67,13 +67,3 @@ document.addEventListener("click", (e) => {
     navigateTo(e.target.href);
   }
 });
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     document.querySelectorAll("a").forEach(function (element) {
-//         element.addEventListener("click", function (e) {
-//           e.preventDefault();
-//           navigateTo(e.target.href);
-//         });
-//       });
-//       pageLoader();
-//     });
