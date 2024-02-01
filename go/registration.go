@@ -11,14 +11,14 @@ type UserData struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	FirstName string `json:"firstname"`
-	// LastName  string `json:"lastname"`
-	// Age       int    `json:"age"`
+	LastName  string `json:"lastname"`
+	Age       string `json:"age"`
 }
 
 func insertUser(user UserData) error {
 	fmt.Println("inserUser function called")
-	_, err := DB.Exec("INSERT INTO Users (Username, Email, PasswordHash, FirstName) VALUES (?, ?, ?, ?)",
-		user.Username, user.Email, user.Password, user.FirstName)
+	_, err := DB.Exec("INSERT INTO Users (Username, Email, PasswordHash, FirstName, LastName, Age) VALUES (?, ?, ?, ?, ?, ?)",
+		user.Username, user.Email, user.Password, user.FirstName, user.LastName, user.Age)
 	if err != nil {
 		fmt.Println("error inserting user into database:", err)
 		return err
