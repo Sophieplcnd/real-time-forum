@@ -16,7 +16,18 @@ func Init() {
 		log.Fatal(err)
 	}
 	fmt.Println("database initialised")
-	defer DB.Close()
+}
+
+// close database
+func CloseDatabase() {
+	fmt.Println("CloseDatabase function called")
+	if DB != nil {
+		if err := DB.Close(); err != nil {
+			log.Println("error closing database:", err)
+		} else {
+			fmt.Println("database closed successfully")
+		}
+	}
 }
 
 // func ServeLogin(w http.ResponseWriter, r *http.Request) {

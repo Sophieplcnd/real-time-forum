@@ -12,13 +12,13 @@ export default class RegisterPage {
             <input type="text" id="username" name="username" required><br>
             
             <label for="age">Age:</label>
-            <input type="text" id="age" name="age" required><br>
+            <input type="text" id="age" name="age"><br>
 
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" required><br>
 
             <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" required><br>
+            <input type="text" id="lastname" name="lastname"><br>
 
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" required><br>
@@ -35,25 +35,27 @@ export default class RegisterPage {
   }
 }
 
+// gender dropdown below until i debug registration handler:
+{/* <label for="gender">Gender:</label>
+<select id="gender">
+  <option value="female">Female</option>
+  <option value="male">Male</option>
+  <option value="other">Other</option>
+  <option value="prefer-not">Prefer Not to Say</option>
+</select><br> */}
+
 export async function registerHandler() {
-  console.log("JS registerHandler triggered");
-
-  // get user registration details
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  const email = document.getElementById("email").value;
-  const firstname = document.getElementById("firstname").value;
-
+  // bare minimum info for registration (for now)
   const userData = {
-    username: username,
-    password: password,
-    email: email,
-    firstname: firstname,
+    username: document.getElementById("username").value,
+    password: document.getElementById("password").value,
+    email: document.getElementById("email").value,
+    firstname: document.getElementById("firstname").value,
   }
 
   // attempt registration
   try {
-    const response = await fetch("http://localhost:8080/register", {
+    const response = await fetch("/register", {
 					method: "POST",
 					headers: {
 						Accept: "application/json",
@@ -63,9 +65,11 @@ export async function registerHandler() {
 					// include cookies
 				})
         if (response.ok) {
-          console.log("JS registration handler: response ok")
-				}
+          alert("registration successful")
+				} else {
+          alert("registration unsuccessful, please check your details")        
+        }
 			} catch (error) {
-				console.log("JS registerHandler error")
+        console.error(error);
 			}
 }

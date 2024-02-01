@@ -18,6 +18,9 @@ func main() {
 	port := ":8080"
 	fmt.Println("Fetching server...")
 	http.ListenAndServe(port, nil)
+
+	// shutdown database when page is closed
+	forum.CloseDatabase()
 }
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
