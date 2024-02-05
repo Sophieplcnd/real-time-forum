@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum SPA</title>
+    <title>Forum</title>
 </head>
 <body>
     <div id="app">
         <header>
-            <h1>Forum SPA</h1>
+            <h1>Forum</h1>
             <nav>
-                <a href="#/">Home</a>
-                <a href="#/create-post">Create Post</a>
+                <a href="/home">Home</a>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+                <a href="/posts">Create Post</a>
             </nav>
         </header>
-        <div id="content">
-        </div>
+        <div id="container"></div>
     </div>
-    <script src="main.js"></script>
+    <script type="module" src="./main.js"></script>
+    <!-- <script type="module" src="./login.js"></script>
+    <script type="module" src="./registration.js"></script> -->
 </body>
 </html>

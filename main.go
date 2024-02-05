@@ -1,44 +1,36 @@
 package main
 
 import (
-	"database/sql"
-	"encoding/json"
+	"fmt"
 	"net/http"
+
+	forum "github.com/Sophieplcnd/real-time-forum/go"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	http.Handle("/", http.FileServer(http.Dir("static")))
+	forum.Init()
 
-	http.HandleFunc("/api/create-post", createPostHandler)
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/", fs)
+	http.HandleFunc("/register", forum.RegisterHandler)
+	http.HandleFunc("/login", forum.LoginHandler)
 
 	port := ":8080"
+	fmt.Println("Fetching server...")
 	http.ListenAndServe(port, nil)
+
+	// shutdown database when page is closed
+	forum.CloseDatabase()
 }
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
-	decoder := json.NewDecoder(r.Body)
-	var postData map[string]string
-	err := decoder.Decode(&postData)
+	err := r.ParseForm()
 	if err != nil {
-		http.Error(w, "Error decoding JSON", http.StatusBadRequest)
+		http.Error(w, "Error parsing form data", http.StatusBadRequest)
 		return
 	}
 
-	title := postData["title"]
-	content := postData["content"]
-
-	db, err := sql.Open("sqlite3", ".data/database.db")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer db.Close()
-
-	_, err = db.Exec("INSERT INTO posts (title, content) VALUES (?, ?)", title, content)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Write([]byte("Post created successfully!"))
+	// title := r.FormValue("post-title")
+	// content := r.FormValue("post-content")
 }
