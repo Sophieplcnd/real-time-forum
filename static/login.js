@@ -24,10 +24,10 @@ export default class LoginPage {
 export async function loginHandler() {
   console.log("JS loginhandler called");
 
-  // get user login details
+  // Changed below proprty name to match the backend
   const loginDetails = {
-    emailUsername: document.getElementById("email-username").value,
-    password: document.getElementById("password").value,
+    Username: document.getElementById("email-username").value, // Assuming your backend expects "Username" for both email and username entries
+    Password: document.getElementById("password").value,
   }
 
   try {
@@ -39,11 +39,14 @@ export async function loginHandler() {
       body: JSON.stringify(loginDetails),
     });
     if (response.ok) {
-      alert("login successful")
+      alert("login successful");
+      
     } else {
-      alert("login unsuccessful, please check your username/email and/or password")        
+      
+      const errorText = await response.text(); 
+      alert(`Login unsuccessful, please check your username/email and/or password. Server says: ${errorText}`);
     }
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 }

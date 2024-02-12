@@ -55,15 +55,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// this updating the user's CurrentSessionID in the database
 	_, err = DB.Exec("UPDATE Users SET CurrentSessionID = ? WHERE Username = ?", newSessionID, storedUser.Username)
 	if err != nil {
-		// Handle error
-	}
 
+	}
 	// Set the session cookie
 	http.SetCookie(w, &http.Cookie{
 		Name:  "session",
 		Value: newSessionID,
 		Path:  "/",
-		// other cookie attributes...
 	})
 
 	// Send a successful login response
@@ -71,7 +69,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(fmt.Sprintf("%s user logged in successfully\n", storedUser.Username)))
 }
 
-// perform user lookup in user database
+// perform user lookup in user database //below not implemented??
 func authenticateUser() {
 	fmt.Println("authenticateUser called")
 }
