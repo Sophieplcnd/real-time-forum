@@ -65,7 +65,10 @@ export async function registerHandler() {
 					body: JSON.stringify(userData),
 					// include cookies
 				})
+<<<<<<< HEAD
         console.log("registration attempted")
+=======
+>>>>>>> 4c48961abef3d431cccca8c9f7f8a6c0ae67f07d
         if (response.ok) {
           alert("registration successful")
 				} else {
