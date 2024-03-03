@@ -9,14 +9,19 @@ import (
 )
 
 func main() {
-   forum.Init()
-  
+	forum.Init()
+
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
+	http.HandleFunc("/register", forum.RegisterHandler)
+	http.HandleFunc("/login", forum.LoginHandler)
 
 	port := ":8080"
 	fmt.Println("Fetching server...")
 	http.ListenAndServe(port, nil)
+
+	// shutdown database when page is closed
+	forum.CloseDatabase()
 }
 
 func createPostHandler(w http.ResponseWriter, r *http.Request) {
