@@ -38,11 +38,10 @@ export async function loginHandler() {
       },
       body: JSON.stringify(loginDetails),
     });
+    console.log("login request submitted")
     if (response.ok) {
       alert("login successful");
-      
     } else {
-      
       const errorText = await response.text(); 
       alert(`Login unsuccessful, please check your username/email and/or password. Server says: ${errorText}`);
     }
