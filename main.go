@@ -15,6 +15,7 @@ func main() {
 	http.Handle("/", fs)
 	http.HandleFunc("/register", forum.RegisterHandler)
 	http.HandleFunc("/login", forum.LoginHandler)
+	http.HandleFunc("/logout", forum.LogoutHandler)
 
 	port := ":8080"
 	fmt.Println("Fetching server...")
